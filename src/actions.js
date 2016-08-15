@@ -1,6 +1,6 @@
-import { ACTIONS, SIGNS } from './consts';
+import { ACTIONS, SIGNS, MODES } from './consts';
 import { INITIAL_STATE } from './reducers/BoardReducer';
-import { isWinner } from './utils';
+import { isWinner, botTurn } from './utils';
 
 export function newGame() {
   return (dispatch) => {
@@ -43,29 +43,58 @@ export function setWinner(sign) {
   }
 }
 
-export function makeMove(index) {
-  return (dispatch, getState) => {
-    const { turn, board } = getState();
+export function setPlayer(id, sign) {
+  return {
+    type: ACTIONS.SET_PLAYER,
+    payload: { id, sign }
+  }
+}
+
+export function setTurnRemote(turn) {
+  return {
+    type: ACTIONS.REMOTE_SET_TURN,
+    payload: turn
+  }
+}
+
+export function makeMove(index, isBot = false) {
+  return (dispatch, getState, socket) => {
+    const { turn, board, mode, player } = getState();
     const { sign, count, winner } = turn;
     const nextTurnSign = (turn.sign == SIGNS.X ? SIGNS.O : SIGNS.X);
 
     if (board[index] !== SIGNS.EMPTY) {
-      // dispatch(setError('Cell is not empty'));
+      // todo: dispatch(setError('Cell is not empty'));
       return;
     }
     if (winner !== null) {
-      // dispatch(setError('Game is over'));
+      // todo: dispatch(setError('Game is over'));
       return;
+    }
+
+    if (mode === MODES.ONLINE_MULTIPLAYER) {
+      if (player.sign != sign) {
+        // todo: dispatch(setError('Not your turn'));
+        return;
+      }
+
+      socket.emit('action', setCell(index, sign));
     }
     
     dispatch(setCell(index, sign));
 
     const finalBoard = getState().board;
-    const won = isWinner(finalBoard, sign);
+    const won = isWinner(finalBoard);
     if (won) {
-      dispatch(setWinner(sign));
+      dispatch(setWinner(won));
     }
 
     dispatch(setTurn(nextTurnSign));
+
+    if (!isBot && !won && mode === MODES.VERSUS_BOT) {
+      setTimeout(() => {
+        dispatch(makeMove(botTurn(finalBoard), true));
+      }, 100);
+    }
   }
 }

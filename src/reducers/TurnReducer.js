@@ -20,6 +20,9 @@ export default function(state = INITIAL_STATE, action) {
       const newCount = state.count + 1;
       return { ...state, sign: action.payload.sign, count: newCount }
     }
+    case ACTIONS.REMOTE_SET_TURN: {
+      return { ...state, ...action.payload }
+    }
     default: return state;
   }
 }

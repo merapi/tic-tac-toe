@@ -24,3 +24,15 @@ export function isWinner(board, sign = null) {
   return false;
 }
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function botTurn(board) {
+  for (let i = 0; i <= 8; i++) {
+    let rand = getRandomInt(0, 8);
+    if (board[rand] === SIGNS.EMPTY) {
+      return rand;
+    }
+  }
+}
