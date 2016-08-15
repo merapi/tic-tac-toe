@@ -1,6 +1,7 @@
 import {expect} from 'chai'
 import {shallow} from 'enzyme'
 import React from 'react'
+
 import Root from '../src/components/Root'
 
 describe('app test', () => {

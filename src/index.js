@@ -6,7 +6,8 @@ import { createStore, applyMiddleware } from 'redux';
 import io from 'socket.io-client';
 
 import Root from './components/Root';
-import WelcomePage from './components/WelcomePage';
+import SettingsPage from './components/SettingsPage';
+import GamePage from './components/GamePage';
 import reducers from './reducers';
 
 const socket = io(`:8765`);
@@ -19,7 +20,9 @@ const store = createStoreWithMiddleware(reducers);
 
 const routes = (
   <Route path="/" component={Root}>
-    <Route path="welcome" component={WelcomePage}/>
+    <Route path="settings" component={SettingsPage}/>
+    <Route path="game" component={GamePage}/>
+    <Route path="*" component={SettingsPage}/>
   </Route>
 );
 
