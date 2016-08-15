@@ -9,14 +9,15 @@ import Root from './components/Root';
 import SettingsPage from './components/SettingsPage';
 import GamePage from './components/GamePage';
 import reducers from './reducers';
+import ReduxThunk from 'redux-thunk';
 
 const socket = io(`:8765`);
 socket.on('connect', () => {
   console.log('ws connected!');
 });
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
-const store = createStoreWithMiddleware(reducers);
+const createStoreWithMiddleware = applyMiddleware(ReduxThunk)(createStore);
+const store = createStoreWithMiddleware(reducers, window.devToolsExtension ? window.devToolsExtension() : f => f);
 
 const routes = (
   <Route path="/" component={Root}>
