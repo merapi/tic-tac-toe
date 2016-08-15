@@ -22,6 +22,13 @@ export function setCell(index, sign) {
   }
 }
 
+export function setMode(mode) {
+  return {
+    type: ACTIONS.SET_MODE,
+    payload: { mode }
+  }
+}
+
 export function setTurn(sign) {
   return {
     type: ACTIONS.SET_TURN,

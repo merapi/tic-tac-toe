@@ -5,8 +5,7 @@ export default class Root extends Component {
   render() {
     return (
       <div>
-        <h1>Starter</h1>
-        <Link to="/">Index link</Link><br/>
+        <h1>Tic-Tac-Toe_React-Redux-Sockets</h1>
         <Link to="/settings">Settings link</Link><br/>
         <Link to="/game">Game link</Link><br/>
         {this.props.children}

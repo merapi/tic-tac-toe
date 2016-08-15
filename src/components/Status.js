@@ -8,7 +8,7 @@ const Status = ({turn, mode, onNewGame}) => {
         <p>Now goes: {turn.sign}, turn {turn.count}</p>
       }
       {turn.winner === null && turn.count === 10 ? <p>TIE</p> : ''}
-      {turn.winner || turn.count === 10 ? <button onClick={onNewGame}>NEW GAME</button> : ''}
+      {turn.winner || turn.count === 10 ? <button className="primary" onClick={onNewGame}>NEW GAME</button> : ''}
       <p>Mode: {mode}</p>
     </div>
   )

@@ -27,3 +27,21 @@ h1, h2 {
   border-radius: 5px;
   margin: 0 5px 5px 0;
 }
+
+button {
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #CCC;
+  margin: 0 10px 10px 0;
+}
+button.selected {
+  background: lightgreen;
+}
+button:not([disabled]) {
+  cursor: pointer;
+}
+button.primary {
+  background: #333;
+  color: #EFEFEF;
+  font-weight: bold;
+}

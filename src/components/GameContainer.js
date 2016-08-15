@@ -6,7 +6,7 @@ import Board from './Board';
 import Status from './Status';
 import { makeMove, newGame } from '../actions';
 
-export class GamePage extends Component {
+export class GameContainer extends Component {
 
   constructor() {
     super();
@@ -45,4 +45,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GamePage);
+export default connect(mapStateToProps, mapDispatchToProps)(GameContainer);
