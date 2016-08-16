@@ -1,3 +1,7 @@
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
+
 var webpack = require('webpack');
 
 module.exports = {
@@ -24,9 +28,11 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     hot: true,
-    historyApiFallback: true
+    historyApiFallback: true,
+    quiet: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new DashboardPlugin(dashboard.setData)
   ]
 };
