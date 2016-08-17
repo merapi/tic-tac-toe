@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server",
     "test": "mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
     "server": "babel-node server.js"
