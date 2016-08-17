@@ -7,7 +7,8 @@
     "start": "node_modules/.bin/webpack-dev-server",
     "test": "mocha --compilers js:babel-core/register --recursive --require ./test/test_helper.js",
     "test:watch": "npm run test -- --watch",
-    "server": "babel-node server.js"
+    "server": "babel-node server.js",
+    "server:watch": "node_modules/.bin/nodemon server.js --exec babel-node"
   },
   "babel": {
     "presets": [

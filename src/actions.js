@@ -3,8 +3,15 @@ import { INITIAL_STATE } from './reducers/BoardReducer';
 import { isWinner, botTurn } from './utils';
 
 export function newGame() {
-  return (dispatch) => {
-    dispatch(setBoard(INITIAL_STATE))
+  return (dispatch, getState, socket) => {
+    const action = setBoard(INITIAL_STATE);
+    const { mode } = getState();
+
+    dispatch(action);
+    
+    if (mode === MODES.ONLINE_MULTIPLAYER) {
+      socket.emit('action', action);
+    }
   }
 }
 
@@ -63,14 +70,17 @@ export function makeMove(index, isBot = false) {
     const { sign, count, winner } = turn;
     const nextTurnSign = (turn.sign == SIGNS.X ? SIGNS.O : SIGNS.X);
 
-    if (board[index] !== SIGNS.EMPTY) {
-      // todo: dispatch(setError('Cell is not empty'));
-      return;
-    }
     if (winner !== null) {
       // todo: dispatch(setError('Game is over'));
       return;
     }
+    if (board[index] !== SIGNS.EMPTY) {
+      // todo: dispatch(setError('Cell is not empty'));
+      return;
+    }
+
+    const action = setCell(index, sign);
+    dispatch(action);
 
     if (mode === MODES.ONLINE_MULTIPLAYER) {
       if (player.sign != sign) {
@@ -78,10 +88,8 @@ export function makeMove(index, isBot = false) {
         return;
       }
 
-      socket.emit('action', setCell(index, sign));
+      socket.emit('action', action);
     }
-    
-    dispatch(setCell(index, sign));
 
     const finalBoard = getState().board;
     const won = isWinner(finalBoard);

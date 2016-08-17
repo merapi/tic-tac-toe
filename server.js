@@ -1,50 +1,59 @@
 import Server from 'socket.io';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+
 import reducers from './src/reducers';
 import { ACTIONS, SIGNS } from './src/consts';
-import { setPlayer, setBoard, setTurn } from './src/actions';
+import { setPlayer, setBoard, setTurn, makeMove } from './src/actions';
 import { INITIAL_STATE } from './src/reducers/BoardReducer';
 
 const port = process.env.PORT || 8765;
 const io = new Server().listen(port);
 
 let players = [];
-const store = createStore(reducers);
+let signs = {};
+const store = createStore(reducers, applyMiddleware(ReduxThunk));
 
 store.subscribe(() => {
-  console.log(store.getState());
   io.emit('state', store.getState());
-})
+});
 
 io.on('connection', player => {
+  const xFree = Object.keys(signs).find(key => signs[key] === SIGNS.X);
+  const playerSign = (xFree === undefined ? SIGNS.X : SIGNS.O);
+  signs[player.id] = playerSign;
+  console.log('pl', players.length, ' => ', playerSign);
 
   players.push(player);
-  console.log('new connection', player.id, ', count:', players.length);
-
-  const playerSign = (players.length === 0 || players.length === 1 ? SIGNS.X : SIGNS.O);
+  console.log('#CONNECTED:', player.id, ', count:', players.length);
+  
   player.emit('action', setPlayer(player.id, playerSign));
 
   if (players.length === 2) {
     store.dispatch(setBoard(INITIAL_STATE));
     //send new game
     players.forEach(p => {
+      console.log('#TWO PLAYERS: reset boards');
       p.emit('action', setBoard(INITIAL_STATE));
-    })
+    });
   }
 
   player.on('action', action => {
-    console.log('action', action);
+    console.log('#ACTION:', action);
+    
     if (action.type == ACTIONS.SET_CELL) {
-
-      const nextTurnSign = (action.payload.sign == SIGNS.X ? SIGNS.O : SIGNS.X);
-      store.dispatch(setTurn(nextTurnSign));
+      store.dispatch(makeMove(action.payload.index));
     }
-    store.dispatch(action);
+    if (action.type == ACTIONS.SET_BOARD) {
+      store.dispatch(action);
+    }
   });
+
   player.on('disconnect', function () {
     players.splice(players.indexOf(player), 1);
-    console.log('dropped connection', player.id, ', count:', players.length);
+    delete signs[player.id];
+    console.log('#DROPPED:', player.id, ', count:', players.length);
   });
-})
+});
 
 console.log(`Server is running at port ${port}`);
