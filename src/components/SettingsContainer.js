@@ -49,9 +49,7 @@ const mapStateToProps = state => ({
   mode: state.mode
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  newGame,
-  setMode
-}, dispatch);
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingsContainer));
+export default withRouter(connect(
+  mapStateToProps,
+  { newGame, setMode }
+)(SettingsContainer));

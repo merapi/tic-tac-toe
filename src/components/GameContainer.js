@@ -10,7 +10,7 @@ export class GameContainer extends Component {
 
   constructor() {
     super();
-    
+
     this.handleCellClick = this.handleCellClick.bind(this);
   }
 
@@ -37,9 +37,7 @@ const mapStateToProps = state => ({
   player: state.player
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-  makeMove,
-  newGame
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(GameContainer);
+export default connect(
+  mapStateToProps,
+  { makeMove, newGame }
+)(GameContainer);
