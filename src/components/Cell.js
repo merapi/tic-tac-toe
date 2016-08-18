@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import * as CONSTS from '../consts';
 
 const Cell = ({sign, index, onClick}) => {
@@ -17,6 +17,12 @@ const Cell = ({sign, index, onClick}) => {
       {sign}
     </div>
   )
+}
+
+Cell.propTypes = {
+  sign: React.PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Cell;

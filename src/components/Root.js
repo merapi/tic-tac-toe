@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 export default class Root extends Component {
@@ -12,4 +12,8 @@ export default class Root extends Component {
       </div>
     )
   }
+}
+
+Root.propTypes = {
+  children: PropTypes.node
 }

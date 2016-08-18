@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
@@ -43,6 +43,11 @@ export class SettingsContainer extends Component {
       </div>
     )
   }
+}
+
+SettingsContainer.propTypes = {
+  mode: PropTypes.string.isRequired,
+  router: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

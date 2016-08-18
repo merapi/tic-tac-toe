@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Cell from './Cell';
 
 const Board = ({board, onClick}) => {
@@ -9,6 +9,11 @@ const Board = ({board, onClick}) => {
       }) }
     </div>
   )
+}
+
+Board.propTypes = {
+  board: PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default Board;

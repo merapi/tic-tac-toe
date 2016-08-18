@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -28,6 +28,17 @@ export class GameContainer extends Component {
       </div>
     )
   }
+}
+
+GameContainer.propTypes = {
+  board: PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired,
+  turn: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    sign: PropTypes.string.isRequired,
+    winner: PropTypes.string
+  }).isRequired,
+  mode: PropTypes.string.isRequired,
+  player: React.PropTypes.object
 }
 
 const mapStateToProps = state => ({
