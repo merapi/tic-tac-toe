@@ -12,7 +12,9 @@ const routes = (
   <Route path="/" component={Root}>
     <IndexRoute component={SettingsContainer}/>
     <Route path="settings" component={SettingsContainer}/>
-    <Route path="game" component={GameContainer}/>
+    <Route path="game" component={GameContainer}>
+      <Route path=":mode" component={GameContainer}/>
+    </Route>
     <Route path="*" component={SettingsContainer}/>
   </Route>
 );

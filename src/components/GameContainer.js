@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Board from './Board';
 import Status from './Status';
 import { makeMove, newGame } from '../actions';
+import { MODES } from '../consts';
 
 export class GameContainer extends Component {
 
@@ -15,7 +16,7 @@ export class GameContainer extends Component {
   }
 
   handleCellClick(index) {
-    this.props.makeMove(index);
+    this.props.makeMove(index, this.props.params.mode);
   }
 
   render() {
@@ -30,10 +31,10 @@ export class GameContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   board: state.board,
   turn: state.turn,
-  mode: state.mode,
+  mode: ownProps.params.mode || MODES.PASS_AND_PLAY,
   player: state.player
 });
 

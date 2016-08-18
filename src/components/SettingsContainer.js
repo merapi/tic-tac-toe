@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 
-import { newGame, setMode } from '../actions';
+import { newGame } from '../actions';
 import { MODES } from '../consts';
 
 export class SettingsContainer extends Component {
@@ -11,7 +11,7 @@ export class SettingsContainer extends Component {
     super();
 
     this.state = {
-      mode: props.mode
+      mode: null
     };
     this.handleNewGame = this.handleNewGame.bind(this);
     this.selectMode = this.selectMode.bind(this);
@@ -22,9 +22,9 @@ export class SettingsContainer extends Component {
   }
 
   handleNewGame() {
-    this.props.router.push('/game');
-    this.props.setMode(this.state.mode);
-    this.props.newGame();
+    const mode = this.state.mode;
+    this.props.router.push(`/game/${mode}`);
+    this.props.newGame(mode);
   }
 
   render() {
@@ -50,8 +50,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  newGame,
-  setMode
+  newGame
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingsContainer));

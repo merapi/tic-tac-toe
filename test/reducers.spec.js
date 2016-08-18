@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { SIGNS, MODES } from '../src/consts';
 import * as actions from '../src/actions';
 import BoardReducer, { INITIAL_STATE } from '../src/reducers/BoardReducer';
-import ModeReducer from '../src/reducers/ModeReducer';
 
 describe('reducers', () => {
 
@@ -54,23 +53,23 @@ describe('reducers', () => {
 
   });
 
-  describe('mode', () => {
+  // describe('mode', () => {
 
-    it('handle 3*SET_MODE', () => {
-      const initState = MODES.PASS_AND_PLAY;
-      const finalState = MODES.ONLINE_MULTIPLAYER;
+  //   it('handle 3*SET_MODE', () => {
+  //     const initState = MODES.PASS_AND_PLAY;
+  //     const finalState = MODES.ONLINE_MULTIPLAYER;
 
-      const runActions = [
-        actions.setMode(MODES.VERSUS_BOT),
-        actions.setMode(MODES.PASS_AND_PLAY),
-        actions.setMode(MODES.ONLINE_MULTIPLAYER)
-      ];
-      const newState = runActions.reduce(ModeReducer, initState);
+  //     const runActions = [
+  //       actions.setMode(MODES.VERSUS_BOT),
+  //       actions.setMode(MODES.PASS_AND_PLAY),
+  //       actions.setMode(MODES.ONLINE_MULTIPLAYER)
+  //     ];
+  //     const newState = runActions.reduce(ModeReducer, initState);
 
-      expect(newState).to.deep.equal(finalState);
-      expect(initState).to.deep.equal(initState);
-    });
+  //     expect(newState).to.deep.equal(finalState);
+  //     expect(initState).to.deep.equal(initState);
+  //   });
 
-  });
+  // });
 
 });

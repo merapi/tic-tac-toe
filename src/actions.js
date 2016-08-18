@@ -2,10 +2,9 @@ import { ACTIONS, SIGNS, MODES } from './consts';
 import { INITIAL_STATE } from './reducers/BoardReducer';
 import { isWinner, botTurn } from './utils';
 
-export function newGame() {
+export function newGame(mode = MODES.PASS_AND_PLAY) {
   return (dispatch, getState, socket) => {
     const action = setBoard(INITIAL_STATE);
-    const { mode } = getState();
 
     dispatch(action);
     
@@ -26,13 +25,6 @@ export function setCell(index, sign) {
   return {
     type: ACTIONS.SET_CELL,
     payload: { index, sign }
-  }
-}
-
-export function setMode(mode) {
-  return {
-    type: ACTIONS.SET_MODE,
-    payload: { mode }
   }
 }
 
@@ -64,9 +56,9 @@ export function setTurnRemote(turn) {
   }
 }
 
-export function makeMove(index, isBot = false) {
+export function makeMove(index, mode, isBot = false) {
   return (dispatch, getState, socket) => {
-    const { turn, board, mode, player } = getState();
+    const { turn, board, player } = getState();
     const { sign, count, winner } = turn;
     const nextTurnSign = (turn.sign == SIGNS.X ? SIGNS.O : SIGNS.X);
 
@@ -102,7 +94,7 @@ export function makeMove(index, isBot = false) {
 
     if (!isBot && !won && mode === MODES.VERSUS_BOT) {
       setTimeout(() => {
-        dispatch(makeMove(botTurn(finalBoard), true));
+        dispatch(makeMove(botTurn(finalBoard), mode, true));
       }, 100);
     }
   }

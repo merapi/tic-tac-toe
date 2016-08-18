@@ -55,18 +55,18 @@ describe('actions', () => {
 
   });
 
-  describe('mode', () => {
+  // describe('mode', () => {
 
-    it('should create an action to set mode', () => {
-      const mode = MODES.ONLINE_MULTIPLAYER;
-      const expectedAction = {
-        type: ACTIONS.SET_MODE,
-        payload: { mode }
-      };
+  //   it('should create an action to set mode', () => {
+  //     const mode = MODES.ONLINE_MULTIPLAYER;
+  //     const expectedAction = {
+  //       type: ACTIONS.SET_MODE,
+  //       payload: { mode }
+  //     };
 
-      expect(actions.setMode(mode)).to.deep.equal(expectedAction);
-    });
+  //     expect(actions.setMode(mode)).to.deep.equal(expectedAction);
+  //   });
 
-  });
+  // });
 
 });
