@@ -30,20 +30,16 @@ export class GameContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    board: state.board,
-    turn: state.turn,
-    mode: state.mode,
-    player: state.player
-  }
-}
+const mapStateToProps = state => ({
+  board: state.board,
+  turn: state.turn,
+  mode: state.mode,
+  player: state.player
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    makeMove,
-    newGame
-  }, dispatch);
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+  makeMove,
+  newGame
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameContainer);
