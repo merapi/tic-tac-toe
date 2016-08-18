@@ -80,7 +80,6 @@ export function makeMove(index, isBot = false) {
     }
 
     const action = setCell(index, sign);
-    dispatch(action);
 
     if (mode === MODES.ONLINE_MULTIPLAYER) {
       if (player.sign != sign) {
@@ -90,6 +89,8 @@ export function makeMove(index, isBot = false) {
 
       socket.emit('action', action);
     }
+
+    dispatch(action);
 
     const finalBoard = getState().board;
     const won = isWinner(finalBoard);
