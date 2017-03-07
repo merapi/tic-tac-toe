@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  api:
+    build: .
+    command: npm start
+    ports:
+      - '9999:80'
+    volumes:
+      - .:/src
+  test:
+    build: .
+    command: npm test -- --watch
