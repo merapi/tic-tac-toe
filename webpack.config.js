@@ -29,7 +29,9 @@ module.exports = {
     contentBase: './dist',
     hot: true,
     historyApiFallback: true,
-    quiet: true
+    quiet: true,
+    host: '0.0.0.0',
+    port: 80
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
